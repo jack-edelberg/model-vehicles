@@ -1,0 +1,3 @@
+- pull out details from each product line item for easier access:
+    - model year
+    - model make
