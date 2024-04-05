@@ -167,6 +167,32 @@ This plot shows that the company has not acquired any new customers in the last 
 
 ## Other Findings
 
+#### Importance of Vehicle's Country of Origin
+In the world of motor vehicles, different countries have different stereotypes. German cars are well-designed and high performance. Italian cars are luxurious. Japanese cars are reliable. To evaluate if there was any correlation between the country of origin of a car and the corresponding model's performance at the company. To perform this analysis, I first created a `view` that contained added researched information about the different car models. This view added information to the dataset about the vehicle's make and country of origin. The entire query can be found at `./code/views/view-make_country.sql`, and example code showing three makes and three countries of origin is shown below:
+```
+DROP VIEW IF EXISTS make_and_country;
+
+CREATE VIEW make_and_country
+AS
+SELECT CASE
+            WHEN productName LIKE '%Harley%' THEN 'Harley-Davidson'
+            WHEN productName LIKE '%Renault%' THEN 'Renault'
+            WHEN productName LIKE '%Guzzi%' THEN 'Moto Guzzi'
+            ...
+            ELSE NULL
+       END as make,
+       CASE
+            WHEN productName LIKE '%Harley%' THEN 'United States'
+            WHEN productName LIKE '%Renault%' THEN 'France'
+            WHEN productName LIKE '%Guzzi%' THEN 'Italy'
+            ...
+            ELSE NULL
+       END as origin,
+       productcode,
+       productname
+  FROM products
+```
+
 #### Slow-moving Products
 If we instead sort the table by low stock_fractions, we find many products where less than 10% of our inventory has been sold (*table a*):
 

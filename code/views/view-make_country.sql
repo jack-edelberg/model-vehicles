@@ -1,3 +1,7 @@
+DROP VIEW IF EXISTS make_and_country;
+
+CREATE VIEW make_and_country
+AS
 SELECT CASE
             WHEN SUBSTR(productname, 0, 5) LIKE '19%' 
                  OR SUBSTR(productname, 0, 5) LIKE '20%'
@@ -41,6 +45,9 @@ SELECT CASE
             WHEN productName LIKE '%GM%' THEN 'General Motors'
             WHEN productName LIKE '%Camero%' THEN 'Chevy'
             WHEN productName LIKE '%Lamborghini%' THEN 'Lamborghini'
+            WHEN productName LIKE '%Greyhound%' THEN 'General Motors'
+            WHEN productName LIKE '%Yamaha%' THEN 'Yamaha'
+            WHEN productName LIKE '%Camaro%' THEN 'Chevrolet'
             ELSE NULL
         END as make,
         CASE
@@ -80,7 +87,15 @@ SELECT CASE
             WHEN productName LIKE '%GM%' THEN 'United States'
             WHEN productName LIKE '%Camero%' THEN 'United States'
             WHEN productName LIKE '%Lamborghini%' THEN 'Italy'
+            WHEN productName LIKE '%BSA' THEN 'United Kingdom'
+            WHEN productName LIKE '%Horch%' THEN 'Germany'
+            WHEN productName LIKE '%Greyhound%' THEN 'United States'
+            WHEN productName LIKE '%Peterbilt%' THEN 'United States'
+            WHEN productName LIKE '%Yamaha%' THEN 'Japan'
+            WHEN productName LIKE '%Camaro%' THEN 'United States'
             ELSE NULL
         END as origin,
+       productcode,
        productname
-  FROM products;
+  FROM products
+ ORDER BY origin;
