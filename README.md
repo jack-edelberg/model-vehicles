@@ -193,10 +193,22 @@ SELECT CASE
   FROM products
 ```
 
-#### Slow-moving Products
-If we instead sort the table by low stock_fractions, we find many products where less than 10% of our inventory has been sold (*table a*):
+Using this view as a basis for further analysis, I identified that the company carried mostly American vehicles (46 different models), Italian cars have the highest average quantity on hand, and French models have the largest profit margin. In addition to this, I identified that French car models have the highest profit margin, while models of United Kingdom vehicles have the smallest (*table a*).
 
-##### Table a: Slow-moving products
+##### Table a: Stock and profit-margin information by Country of origin
+|origin        |num_models|avg_quantity_on_hand|profit_margin|
+|--------------|----------|--------------------|-------------|
+|Italy         |11        |6365                |0.67         |
+|Japan         |6         |6056                |0.62         |
+|United Kingdom|3         |5645                |0.56         |
+|France        |3         |5584                |0.73         |
+|United States |46        |5024                |0.68         |
+|Germany       |13        |4962                |0.64         |
+
+#### Slow-moving Products
+If we instead sort the table by low stock_fractions, we find many products where less than 10% of our inventory has been sold (*table b*):
+
+##### Table b: Slow-moving products
 | productName                    | num_stocked | num_ordered |
 | ------------------------------ | ----------- | ----------- |
 | 1995 Honda Civic               | 9772        | 917         |
