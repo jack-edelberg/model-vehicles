@@ -16,10 +16,12 @@ I used these findings to develop several recommendations for the company moving 
 * Invest in acquiring new customers
 
 ## Introduction
-In this SQL-based (SQLite) project, I investigate data provided by wholesaler that purchases scale-model vehicles (motorcycles, airplanes, vehicles, and trains) from manufacturers and sells them to retailers.
+In this SQL-based (SQLite) project, I investigate data provided by a wholesaler that purchases scale-model vehicles (motorcycles, airplanes, vehicles, and trains) from manufacturers and sells them to retailers.
+
+There are about 20 major companies operating within this market, including *Mattel Inc.*, *Amalgam Collection*, *Hamleys of London Ltd.*, and *Welly Die Casting Factory Ltd.* Together, these companies and others represent a scale-model vehicle market [estimated at USD 4.2B in 2023 by Technavio](https://www.technavio.com/report/automotive-diecast-scale-model-market-industry-analysis). The consumer market is primarily in the US, EU, and Japan, and is expected to grow by about 6% each year through 2028.
 
 ## Exploring the Database
-The database is composed of 8 tables, as shown in *figure 1*. These tables are of varying size (*table 1*), with the largest table containing the order details (5 attributes, 2,996 rows) and the smallest table containing information about the product lines (4 attributes, 7 rows)
+The database consists of 8 tables, as shown in *figure 1*. These tables are of varying size (*table 1*), with the largest table containing the order details (5 attributes, 2,996 rows) and the smallest table containing information about the product lines (4 attributes, 7 rows)
 ##### **Figure 1:** Database Schema
 ![Figure 1: Database Schema](./images/db.png)
 
