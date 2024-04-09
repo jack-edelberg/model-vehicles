@@ -70,7 +70,7 @@ CASE
     WHEN SUM(quantityordered) - quantityinstock <= 0
     THEN 0
     ELSE SUM(quantityordered) - quantityinstock
-END as num_backordered
+END AS num_backordered
 ```
 There are 11 products currently on backorder (*table 2*):
 
