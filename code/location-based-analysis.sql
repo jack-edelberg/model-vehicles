@@ -22,3 +22,24 @@ SELECT salesgroup,
               GROUP BY customerNumber) AS customer_revenue
     ON customers_with_sales_group.customerNumber = customer_revenue.customerNumber
  GROUP BY salesgroup;
+
+-- Check if the three Pattersons are related geographically
+SELECT city,
+       country,
+       firstname,
+       lastname
+  FROM offices
+ INNER JOIN employees
+    ON offices.officeCode = employees.officeCode
+ WHERE employees.lastname LIKE "Patterson";
+
+-- Check if the two Firrellis are related geographically
+SELECT city,
+       country,
+       firstname,
+       lastname
+  FROM offices
+ INNER JOIN employees
+    ON offices.officeCode = employees.officeCode
+ WHERE employees.lastname LIKE "Firrelli";
+

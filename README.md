@@ -31,6 +31,8 @@ The structure of the company is graphically depicted in *figure 1*.
 ##### Figure 1: Company employee heirarchy
 ![Figure 1: Employee hierarchy](./images/employee-hierarchy.png)
 
+With the information presented in the database, I infer that the company is a family-based business, due to the presence of three "Pattersons" and two "Firrellis".
+
 ### Market Structure and Outlook
 There are about 20 major companies operating within this market, including *Mattel Inc.*, *Amalgam Collection*, *Hamleys of London Ltd.*, and *Welly Die Casting Factory Ltd.* Together, these companies and others represent a scale-model vehicle market [estimated at USD 4.2B in 2023 by Technavio](https://www.technavio.com/report/automotive-diecast-scale-model-market-industry-analysis). The consumer market is primarily in the US, EU, and Japan, and is expected to grow by about 6% each year through 2028.
 
