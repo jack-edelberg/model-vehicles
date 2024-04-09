@@ -22,13 +22,3 @@ SELECT lastname || ', ' || firstName AS employee_name,
  INNER JOIN offices
     ON employees.officeCode = offices.officeCode
  ORDER BY lastname;
-
-SELECT city,
-       country
-  FROM offices;
-
-SELECT salesgroup,
-       COUNT(*)
-  FROM customers_with_sales_group
- GROUP BY salesgroup;
-       

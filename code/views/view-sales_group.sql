@@ -37,5 +37,4 @@ SELECT *,
   FROM customers;
 
 SELECT *
-  FROM customers_with_sales_group
- WHERE salesgroup IS 'EMEA';
+  FROM customers_with_sales_group;
