@@ -29,7 +29,7 @@ With the exception of the Japanese group, each group has a sales manager and a t
 
 The structure of the company is graphically depicted in *figure 1*.
 ##### Figure 1: Company employee heirarchy
-![Figure 1: Employee heirarchy](./images/employee-heirarchy.png)
+![Figure 1: Employee hierarchy](./images/employee-hierarchy.png)
 
 ### Market Structure and Outlook
 There are about 20 major companies operating within this market, including *Mattel Inc.*, *Amalgam Collection*, *Hamleys of London Ltd.*, and *Welly Die Casting Factory Ltd.* Together, these companies and others represent a scale-model vehicle market [estimated at USD 4.2B in 2023 by Technavio](https://www.technavio.com/report/automotive-diecast-scale-model-market-industry-analysis). The consumer market is primarily in the US, EU, and Japan, and is expected to grow by about 6% each year through 2028.
@@ -75,6 +75,12 @@ SELECT p.productcode,
     ON p.productcode = od.productcode
  GROUP BY p.productcode
 ```
+The stock fraction metric in the code block above was used to identify products that were overstocked while normalizing to the quantity of each product in stock
+
+$$ \text{Stock Fraction} = \frac{n_{ordered}}{n_{stocked}}$$
+
+Where $n_{ordered}$ is the number of items ordered and $n_{stocked}$ is the number of items in stock.
+
 Using this base code, we can add different filters to find important information on the data. For example, if we order by `stock_fraction` ascending, it is clear that we are extremely overstocked in *1995 Honda Civics* and *2002 Chevy Corvettes*. These are items that we do not need to order anytime soon. Several other important observations follow.
 
 #### Back-Orders
@@ -150,6 +156,8 @@ Removing the two upper outliers from the analysis, we can see additional details
 * Middle buyers ($15k - $49k)
 * Low buyers ($0k - $14k)
 
+These stratification thresholds were chosen based on the visual structure of *figure 4* (a possible improvement to this technique would be to assign customer strata by percentile cutoffs)
+
 ##### Figure 4: VIP-free distribution of customers by total profit
 ![Figure 4: A histogram showing the distribution of customers by total profit with outliers greater than $100k removed. The distribution appears to have minima around $15k and $45k](./images/customer-profit-distribution-zoom.png)
 
@@ -211,6 +219,8 @@ SELECT CASE
 
 Using this view as a basis for further analysis, I identified that the company carried mostly American vehicles (46 different models), Italian cars have the highest average quantity on hand, and French models have the largest profit margin. In addition to this, I identified that French car models have the highest profit margin, while models of United Kingdom vehicles have the smallest (*table a*).
 
+$$\text{Profit Margin} = \frac{\text{Sell Price - Buy Price}}{\text{Buy Price}}$$
+
 ##### Table a: Stock and profit-margin information by Country of origin
 |origin        |num_models|avg_quantity_on_hand|profit_margin|
 |--------------|----------|--------------------|-------------|
@@ -222,7 +232,7 @@ Using this view as a basis for further analysis, I identified that the company c
 |Germany       |13        |4962                |0.64         |
 
 #### Slow-moving Products
-If we instead sort the table by low stock_fractions, we find many products where less than 10% of our inventory has been sold (*table b*):
+If we instead sort the table by low `stock_fractions`, we find many products where less than 10% of our inventory has been sold (*table b*):
 
 ##### Table b: Slow-moving products
 | productName                    | num_stocked | num_ordered |
