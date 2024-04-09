@@ -18,12 +18,26 @@ I used these findings to develop several recommendations for the company moving 
 ## Introduction
 In this SQL-based (SQLite) project, I investigate data provided by a wholesaler that purchases scale-model vehicles (motorcycles, airplanes, vehicles, and trains) from manufacturers and sells them to retailers.
 
+### Company structure
+Our client is an international wholesaler of scale-model vehicles that has offices in five countries across four continents. They have 23 employees organized into geographically defined sales groups:
+- Europe, Middle East, and Africa (EMEA)
+- North America (NA)
+- Asia Pacific Region (APAC)
+- Japan
+
+With the exception of the Japanese group, each group has a sales manager and a team of sales reps. The Japanese team consists of two sales representatives.
+
+The structure of the company is graphically depicted in *figure 1*.
+##### Figure 1: Company employee heirarchy
+![Figure 1: Employee heirarchy](./images/employee-heirarchy.png)
+
+### Market Structure and Outlook
 There are about 20 major companies operating within this market, including *Mattel Inc.*, *Amalgam Collection*, *Hamleys of London Ltd.*, and *Welly Die Casting Factory Ltd.* Together, these companies and others represent a scale-model vehicle market [estimated at USD 4.2B in 2023 by Technavio](https://www.technavio.com/report/automotive-diecast-scale-model-market-industry-analysis). The consumer market is primarily in the US, EU, and Japan, and is expected to grow by about 6% each year through 2028.
 
 ## Exploring the Database
-The database consists of 8 tables, as shown in *figure 1*. These tables are of varying size (*table 1*), with the largest table containing the order details (5 attributes, 2,996 rows) and the smallest table containing information about the product lines (4 attributes, 7 rows)
-##### **Figure 1:** Database Schema
-![Figure 1: Database Schema](./images/db.png)
+The database consists of 8 tables, as shown in *figure 2*. These tables are of varying size (*table 1*), with the largest table containing the order details (5 attributes, 2,996 rows) and the smallest table containing information about the product lines (4 attributes, 7 rows)
+##### **Figure 2:** Database Schema
+![Figure 2: Database Schema](./images/db.png)
 
 ##### **Table 1:** Relative shapes of the individual tables
 <table><tr><th>table_name</th><th>num_attributes</th><th>num_rows</th><tr><tr><td>customers</td><td>13</td><td>122</td></tr><tr><td>employees</td><td>8</td><td>23</td></tr><tr><td>offices</td><td>9</td><td>7</td></tr><tr><td>orderdetails</td><td>5</td><td>2996</td></tr><tr><td>orders</td><td>7</td><td>326</td></tr><tr><td>payments</td><td>4</td><td>273</td></tr><tr><td>productlines</td><td>4</td><td>7</td></tr><tr><td>products</td><td>9</td><td>23</td></tr></table>
@@ -122,22 +136,22 @@ SELECT o.customernumber,
 ```
 
 #### Identifying VIP Customers
-Using the `total_revenue` and `total_profit` data, we can easily pull out VIP customers. The distribution of the calculated `total_profit` and `total_revenue` show that there is a clear cutoff for VIP customers (*figure 2*) at around \$100,000 of total profit. This exclusive group includes only two customers: 
+Using the `total_revenue` and `total_profit` data, we can easily pull out VIP customers. The distribution of the calculated `total_profit` and `total_revenue` show that there is a clear cutoff for VIP customers (*figure 3*) at around \$100,000 of total profit. This exclusive group includes only two customers: 
 * Euro+ Shopping Channel
 * Mini Gifts Distributors Ltd.
 
-##### Figure 2: Distribution of customers by total profit
+##### Figure 3: Distribution of customers by total profit
 
-![Figure 2: A histogram showing the distribution of customers by total profit. A strongly right-skewed distribution. Only two customers generated profit greater than $100k. The vast majority of customers generated less than $50k of profit.](./images/customer-profit-distribution.png)
+![Figure 3: A histogram showing the distribution of customers by total profit. A strongly right-skewed distribution. Only two customers generated profit greater than $100k. The vast majority of customers generated less than $50k of profit.](./images/customer-profit-distribution.png)
 
 #### Stratifying Remaining Customers
-Removing the two upper outliers from the analysis, we can see additional details within the larger group of customers (*figure 3*). Specifically, I chose to separate the remaining customers into three groups:
+Removing the two upper outliers from the analysis, we can see additional details within the larger group of customers (*figure 4*). Specifically, I chose to separate the remaining customers into three groups:
 * High buyers  ($50k - $100k)
 * Middle buyers ($15k - $49k)
 * Low buyers ($0k - $14k)
 
-##### Figure 3: VIP-free distribution of customers by total profit
-![Figure 3: A histogram showing the distribution of customers by total profit with outliers greater than $100k removed. The distribution appears to have minima around $15k and $45k](./images/customer-profit-distribution-zoom.png)
+##### Figure 4: VIP-free distribution of customers by total profit
+![Figure 4: A histogram showing the distribution of customers by total profit with outliers greater than $100k removed. The distribution appears to have minima around $15k and $45k](./images/customer-profit-distribution-zoom.png)
 
 With these groups in mind (VIP, high, middle, low), each of these groups can be addressed in different ways. The VIP's should be catered to individually, perhaps with special events. The low buyers can be targeted with promotions that encouraging bulk purchasing. The middle buyers can be receive typical promotions, while the high buyers should receive preferential attention from associates.
 ### Growth Evaluation
@@ -149,21 +163,21 @@ CAST(SUBSTR(orderdate, 1, 4) AS INT) * 100
 + CAST(SUBSTR(orderdate, 6, 2) AS INT) AS year_month
 ```
 
-The data was then grouped by `year_month` and plotted to reveal year-on-year trends (*figure 4*). This reveals the following trends:
+The data was then grouped by `year_month` and plotted to reveal year-on-year trends (*figure 5*). This reveals the following trends:
 * Year-on-year revenue has generally increased
 * November is the highest revenue month each year
 * October and November year-on-year revenue appears unchanged
 
-##### Figure 4: Revenue trends
-![Figure 4: A bar chart showing the monthly revenue (Y axis) versus year, grouped by month (X axis). There is a clear correlation between month of the year and revenue, with November revenue being highest in the each of the plotted years. For months other than October and November, the revenue has increased year-on-year.](./images/revenue-by-year-month.png)
+##### Figure 5: Revenue trends
+![Figure 5: A bar chart showing the monthly revenue (Y axis) versus year, grouped by month (X axis). There is a clear correlation between month of the year and revenue, with November revenue being highest in the each of the plotted years. For months other than October and November, the revenue has increased year-on-year.](./images/revenue-by-year-month.png)
 
 The high revenue in October and November can likely be attributed to the holiday shopping season. Since there is not a year-on-year increase in holiday spending, this is an area that the company could use marketing techniques to improve.
 
 #### Customer Growth
-In addition to revenue growth, customer growth is another important metric for company growth. To do this, I created a table of customer numbers along with their year and month from the `orders` table. I took this table and processed it using Pandas to find the growth in unique customer numbers during the observed time (*figure 5*)
+In addition to revenue growth, customer growth is another important metric for company growth. To do this, I created a table of customer numbers along with their year and month from the `orders` table. I took this table and processed it using Pandas to find the growth in unique customer numbers during the observed time (*figure 6*)
 
-##### Figure 5: Customer growth trends
-![Figure 5: A line graph showing the number of unique customers (Y axis) versus the date (X axis). Customer growth follows a generally linear trajectory from 5 customers in January 2003 to around 90 customers in July 2004. From July 2004 to July 2005, number of unique customers plateaus at 98.](./images/customer-growth.png)
+##### Figure 6: Customer growth trends
+![Figure 6: A line graph showing the number of unique customers (Y axis) versus the date (X axis). Customer growth follows a generally linear trajectory from 5 customers in January 2003 to around 90 customers in July 2004. From July 2004 to July 2005, number of unique customers plateaus at 98.](./images/customer-growth.png)
 
 This plot shows that the company has not acquired any new customers in the last 9 months of recorded data. This represents both a significant problem and an opportunity to improve. The company should focus on expanding their customer base to increase revenues.
 
